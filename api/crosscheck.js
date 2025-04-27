@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': 'YOUR_PRIVATE_KEY_HERE' // 🔥 Put your new private key here
+        'X-Api-Key': 'pk90yaiJMEwyvDc9-K#w!IXHJ.-2Vs' // 🔥 Put your new private key here
       },
       body: JSON.stringify({
         firstName: first_name,
