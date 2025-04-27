@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': process.env.VOUCHED_PRIVATE_API_KEY // ✅ use environment variable securely
+        'Authorization': `Token ${process.env.VOUCHED_PRIVATE_API_KEY}` // ✅ Corrected!
       },
       body: JSON.stringify({
         firstName: first_name,
