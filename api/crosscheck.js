@@ -11,42 +11,12 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { first_name, last_name, email, phone, dob, gender, streetAddress, city, state, postalCode, country } = req.body;
+  const { first_name, last_name, email, phone, dob } = req.body;
 
   if (!first_name || !last_name || !email || !phone || !dob) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(400).json({ message: "Missing required fields" });
   }
-
-  // Convert dob to YYYY-MM-DD if needed
-  let birthDate = dob;
-  if (dob.includes("/")) {
-    const [month, day, year] = dob.split("/");
-    birthDate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-  }
-
-  // Only send address if all parts are present
-  let address;
-  if (streetAddress && city && state && postalCode && country) {
-    address = {
-      streetAddress,
-      city,
-      state,
-      postalCode,
-      country
-    };
-  }
-
-  const payload = {
-    firstName: first_name,
-    lastName: last_name,
-    email,
-    phone,
-    birthDate
-  };
-
-  if (gender) payload.gender = gender;
-  if (address) payload.address = address;
 
   try {
     const vouchedResponse = await fetch('https://verify.vouched.id/api/identity/crosscheck', {
@@ -55,7 +25,12 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'X-API-Key': process.env.VOUCHED_PRIVATE_API_KEY
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        firstName: first_name,
+        lastName: last_name,
+        email: email,
+        phone: phone
+      })
     });
 
     const data = await vouchedResponse.json();
