@@ -26,7 +26,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${encodeURIComponent(process.env.VOUCHED_PRIVATE_API_KEY)}`
+        'Authorization': `Token ${process.env.VOUCHED_PRIVATE_API_KEY}`
         // 🔥 Notice encodeURIComponent() here to handle the # safely
       },
       body: JSON.stringify({
