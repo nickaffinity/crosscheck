@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': 'pk90yaiJMEwyvDc9-K#w!IXHJ.-2Vs'  // <- Your hardcoded key
+        'X-Api-Key': 'YOUR_PRIVATE_KEY_HERE' // 🔥 Put your new private key here
       },
       body: JSON.stringify({
         firstName: first_name,
@@ -38,17 +38,16 @@ export default async function handler(req, res) {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // ✅ If Vouched itself returned error, pass it back
     if (!vouchedResponse.ok) {
-      console.error('Vouched API Error:', data);
-      return res.status(400).json(data); // Send back real Vouched error
+      console.error('Vouched Response Error:', vouchedResponse.status, data);
+      return res.status(vouchedResponse.status).json({ message: 'Vouched API error', vouchedStatus: vouchedResponse.status, vouchedError: data });
     }
 
     res.status(200).json(data);
 
   } catch (error) {
-    console.error('Server Error:', error.message || error);
+    console.error('Server fetch error:', error.message || error);
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.status(500).json({ message: "Server Error", error: error.message || error });
+    res.status(500).json({ message: "Server fetch error", error: error.message || error });
   }
 }
