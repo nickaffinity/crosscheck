@@ -18,6 +18,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
+  // Build address dynamically to exclude empty fields
+  const address = {};
+  if (streetAddress) address.streetAddress = streetAddress;
+  if (unit) address.unit = unit;
+  if (city) address.city = city;
+  if (state) address.state = state;
+  if (postalCode) address.postalCode = postalCode;
+  if (country) address.country = country;
+
   try {
     const vouchedResponse = await fetch('https://verify.vouched.id/api/identity/crosscheck', {
       method: 'POST',
@@ -32,14 +41,7 @@ export default async function handler(req, res) {
         phone: phone,
         birthDate: dob,
         gender: gender,
-        address: {
-          streetAddress: streetAddress || "",
-          unit: unit || "",
-          city: city || "",
-          state: state || "",
-          postalCode: postalCode || "",
-          country: country || ""
-        }
+        address: address
       })
     });
 
