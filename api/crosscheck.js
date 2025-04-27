@@ -11,9 +11,9 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { first_name, last_name, email, phone, dob } = req.body;
+  const { first_name, last_name, email, phone, dob, gender, streetAddress, city, state, postalCode, country } = req.body;
 
-  if (!first_name || !last_name || !email || !phone || !dob) {
+  if (!first_name || !last_name || !email || !phone || !dob || !gender || !streetAddress || !city || !state || !postalCode || !country) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(400).json({ message: "Missing required fields" });
   }
@@ -29,7 +29,16 @@ export default async function handler(req, res) {
         firstName: first_name,
         lastName: last_name,
         email: email,
-        phone: phone
+        phone: phone,
+        birthDate: dob,
+        gender: gender,
+        address: {
+          streetAddress: streetAddress,
+          city: city,
+          state: state,
+          postalCode: postalCode,
+          country: country
+        }
       })
     });
 
