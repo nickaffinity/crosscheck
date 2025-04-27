@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-API-Key');
     return res.status(200).end();
   }
 
@@ -19,20 +19,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 🔥 Debug only - remove after confirmed working
-    console.log('DEBUG: VOUCHED_PRIVATE_API_KEY:', process.env.VOUCHED_PRIVATE_API_KEY || 'MISSING');
-
-    const vouchedResponse = await fetch('https://api.vouched.id/v1/crosscheck', {
+    const vouchedResponse = await fetch('https://verify.vouched.id/api/identity/crosscheck', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${process.env.VOUCHED_PRIVATE_API_KEY}`
-        // 🔥 Notice encodeURIComponent() here to handle the # safely
+        'X-API-Key': process.env.VOUCHED_PRIVATE_API_KEY
       },
       body: JSON.stringify({
         firstName: first_name,
         lastName: last_name,
-        birthDate: dob,
         email: email,
         phone: phone
       })
