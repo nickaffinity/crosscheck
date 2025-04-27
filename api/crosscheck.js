@@ -19,6 +19,18 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Prepare cleaned address object
+    const cleanedAddress = {
+      streetAddress: address?.streetAddress,
+      city: address?.city,
+      state: address?.state,
+      postalCode: address?.postalCode,
+      country: address?.country
+    };
+    if (address?.unit && address.unit.trim() !== "" && address.unit.trim() !== "_____") {
+      cleanedAddress.unit = address.unit.trim();
+    }
+
     const vouchedResponse = await fetch('https://verify.vouched.id/api/identity/crosscheck', {
       method: 'POST',
       headers: {
@@ -32,7 +44,7 @@ export default async function handler(req, res) {
         phone: phone,
         birthDate: dob,
         gender: gender,
-        address: address
+        address: cleanedAddress
       })
     });
 
