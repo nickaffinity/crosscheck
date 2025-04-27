@@ -1,8 +1,7 @@
 export default async function handler(req, res) {
-  // ✅ Handle CORS preflight request
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Origin', '*'); // <- Allows from any domain during testing
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
     return res.status(200).end();
@@ -24,7 +23,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': 'VS!gm5@f#Ga9JltGZI@e_LXvV!Q325' // 🔥 Hardcoded Vouched Private Key
+        'X-Api-Key': 'VS!gm5@f#Ga9JltGZI@e_LXvV!Q325'  // <- Your hardcoded key
       },
       body: JSON.stringify({
         firstName: first_name,
@@ -36,12 +35,20 @@ export default async function handler(req, res) {
     });
 
     const data = await vouchedResponse.json();
+
     res.setHeader('Access-Control-Allow-Origin', '*');
+
+    // ✅ If Vouched itself returned error, pass it back
+    if (!vouchedResponse.ok) {
+      console.error('Vouched API Error:', data);
+      return res.status(400).json(data); // Send back real Vouched error
+    }
+
     res.status(200).json(data);
 
   } catch (error) {
-    console.error(error);
+    console.error('Server Error:', error.message || error);
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Server Error", error: error.message || error });
   }
 }
