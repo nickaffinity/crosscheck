@@ -19,20 +19,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const vouchedResponse = await fetch('https://api.vouched.id/v1/crosscheck', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${process.env.VOUCHED_PRIVATE_API_KEY}` // ✅ Corrected!
-      },
-      body: JSON.stringify({
-        firstName: first_name,
-        lastName: last_name,
-        birthDate: dob,
-        email: email,
-        phone: phone
-      })
-    });
+  console.log('DEBUG: VOUCHED_PRIVATE_API_KEY:', process.env.VOUCHED_PRIVATE_API_KEY || 'MISSING');
+
+  const vouchedResponse = await fetch('https://api.vouched.id/v1/crosscheck', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${process.env.VOUCHED_PRIVATE_API_KEY}`
+    },
+    body: JSON.stringify({
+      firstName: first_name,
+      lastName: last_name,
+      birthDate: dob,
+      email: email,
+      phone: phone
+    })
+  });
+
 
     const data = await vouchedResponse.json();
 
