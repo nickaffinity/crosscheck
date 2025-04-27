@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Api-Key': 'VS!gm5@f#Ga9JltGZI@e_LXvV!Q325'  // <- Your hardcoded key
+        'X-Api-Key': 'pk90yaiJMEwyvDc9-K#w!IXHJ.-2Vs'  // <- Your hardcoded key
       },
       body: JSON.stringify({
         firstName: first_name,
