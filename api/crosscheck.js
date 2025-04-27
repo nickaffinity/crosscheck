@@ -11,22 +11,20 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { first_name, last_name, email, phone, dob, gender, streetAddress, unit, city, state, postalCode, country } = req.body;
+  const { first_name, last_name, email, phone, dob, gender, streetAddress, city, state, postalCode, country } = req.body;
 
   if (!first_name || !last_name || !email || !phone || !dob) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  // Build address dynamically to exclude empty fields
   const address = {};
   if (streetAddress) address.streetAddress = streetAddress;
-  if (unit) address.unit = unit;
   if (city) address.city = city;
   if (state) address.state = state;
   if (postalCode) address.postalCode = postalCode;
   if (country) address.country = country;
-
+  
   try {
     const vouchedResponse = await fetch('https://verify.vouched.id/api/identity/crosscheck', {
       method: 'POST',
