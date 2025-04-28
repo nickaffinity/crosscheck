@@ -19,22 +19,25 @@ export default async function handler(req, res) {
     }
   
     try {
-      const ssnResponse = await fetch('https://verify.vouched.id/api/private-ssn/verify'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-API-Key': process.env.VOUCHED_PRIVATE_API_KEY
-        },
-        body: JSON.stringify({
-          firstName: first_name,
-          lastName: last_name,
-          phone: phone.startsWith('+') ? phone : `+1${phone}`, // Ensure E.164 format
-          ssn: ssn,
-          email: email || undefined,
-          dob: dob || undefined
-        })
-      });
+      const ssnResponse = await fetch(
+          'https://verify.vouched.id/api/private-ssn/verify',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-API-Key': process.env.VOUCHED_PRIVATE_API_KEY
+            },
+            body: JSON.stringify({
+              firstName: first_name,
+              lastName: last_name,
+              phone: phone.startsWith('+') ? phone : `+1${phone}`,
+              ssn,
+              email: email || undefined,
+              dob: dob || undefined
+            })
+          }
+        );
   
       const data = await ssnResponse.json();
       console.log(ssn);
