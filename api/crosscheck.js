@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   const { first_name, last_name, email, phone, dob } = req.body;
 
-  if (!first_name || !last_name || !email || !phone || !dob) {
+  if (!first_name || !last_name || !email || !phone) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     return res.status(400).json({ message: "Missing required fields" });
   }
