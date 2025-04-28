@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { first_name, last_name, email, phone, streetAddress, city, state, postalCode, country } = req.body;
+  const { first_name, last_name, email, phone, streetAddress } = req.body;
 
   if (!first_name || !last_name || !email || !phone) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,11 +30,7 @@ export default async function handler(req, res) {
         lastName: last_name,
         email: email,
         phone: phone,
-        streetAddress: streetAddress,
-        city: city,
-        state: state,
-        postalCode: postalCode,
-        country: country
+        streetAddress: streetAddress
       })
     });
 
