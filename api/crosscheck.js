@@ -30,6 +30,7 @@ export default async function handler(req, res) {
         lastName: last_name,
         email: email,
         phone: phone
+        birthDate: dob
       })
     });
 
