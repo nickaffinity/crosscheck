@@ -37,6 +37,7 @@ export default async function handler(req, res) {
       });
   
       const data = await ssnResponse.json();
+    console.log(ssn);
   
       res.setHeader('Access-Control-Allow-Origin', '*');
   
