@@ -1,3 +1,16 @@
+export default async function handler(req, res) {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,X-API-Key');
+    return res.status(200).end();
+  }
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
+  
 const { first_name, last_name, email, phone, dob, gender, streetAddress, unit, city, state, postalCode, country } = req.body;
 
 if (!first_name || !last_name || !email || !phone || !dob) {
