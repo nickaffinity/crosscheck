@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     }
   
     try {
-      const ssnResponse = await fetch('https://verify.vouched.id/api/private-ssn/verify', {
+      const ssnResponse = await fetch('https://verify.vouched.id/api/private-ssn/verify'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
