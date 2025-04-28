@@ -17,8 +17,9 @@ export default async function handler(req, res) {
       res.setHeader('Access-Control-Allow-Origin', '*');
       return res.status(400).json({ message: "Missing required fields (first_name, last_name, phone, ssn)" });
     }
-  
+
     try {
+        console.log("trying ssn api"),
       const ssnResponse = await fetch(
           'https://verify.vouched.id/api/private-ssn/verify',
           {
