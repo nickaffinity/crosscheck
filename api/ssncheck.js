@@ -32,9 +32,9 @@ export default async function handler(req, res) {
               firstName: first_name,
               lastName: last_name,
               phone: phone.startsWith('+') ? phone : `+1${phone}`,
-              ssn,
-              email: email || undefined,
-              dob: dob || undefined
+              ssn: ssn,
+              email: email,
+              dob: dob
             })
           }
         );
