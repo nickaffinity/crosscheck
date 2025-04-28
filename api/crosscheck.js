@@ -34,7 +34,7 @@ export default async function handler(req, res) {
         city: city,
         state: state,
         postalCode: postalCode,
-        country: country,
+        country: country
       })
     });
 
